@@ -24,11 +24,10 @@
     margin: 0 auto;
 }
 
-/* Ополонка */
 .ice-hole {
     position: absolute;
     bottom: 20px;
-    right: 30px;
+    right: -30px;
     width: 200px;
     height: 40px;
     background: #5ba2ad;
@@ -47,7 +46,7 @@
     z-index: -1;
 }
 
-/* Пінгвін */
+
 .penguin {
     position: absolute;
     bottom: 30px;
@@ -119,12 +118,11 @@
 .left-foot { left: 10px; }
 .right-foot { right: 10px; }
 
-/* Вудка та табличка */
 .fishing-rod {
     position: absolute;
-    bottom: 85px;
+    bottom: 50px;
     left: 185px;
-    width: 120px;
+    width: 170px;
     height: 5px;
     background: #ff7e1a;
     transform: rotate(-45deg);
