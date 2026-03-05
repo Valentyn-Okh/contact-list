@@ -5,6 +5,7 @@ import { deleteStatus } from "../../redux/actions";
 import ConfirmModal from "../../components/ConfirmModal/ConfirmModal";
 
 export default function ContactStatuses() {
+  const contacts = useSelector((state) => state.contacts);
   const statuses = useSelector((state) => state.contactStatuses);
   const dispatch = useDispatch();
 
@@ -22,13 +23,15 @@ export default function ContactStatuses() {
     setStatusToDelete(null);
   };
 
+  const getContactCount = (status) =>
+    contacts.filter((contact) => contact.status === status).length;
+
   return (
     <main className="shadow bg-white container rounded mt-4">
       <div className="row">
         <div className="col-12">
           <Link
             to={"/contact-statues/add-contact-status"}
-            type ="button"
             className="btn btn-success m-2 btn-lg"
           >
             ADD STATUS
@@ -38,10 +41,18 @@ export default function ContactStatuses() {
             <thead>
               <tr>
                 <th scope="col">#</th>
-                <th className="text-center" scope="col">Status name</th>
-                <th className="text-center" scope="col">Color</th>
-                <th className="text-center" scope="col">Contact count</th>
-                <th className="text-center" scope="col">Edit/Del</th>
+                <th className="text-center" scope="col">
+                  Status name
+                </th>
+                <th className="text-center" scope="col">
+                  Color
+                </th>
+                <th className="text-center" scope="col">
+                  Contact count
+                </th>
+                <th className="text-center" scope="col">
+                  Edit/Del
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -55,7 +66,9 @@ export default function ContactStatuses() {
                   >
                     {statuses[status].bg}
                   </td>
-                  <td className="fs-5 align-middle text-center">{statuses[status].count}</td>
+                  <td className="fs-5 align-middle text-center">
+                    {getContactCount(status)}
+                  </td>
                   <td className="fs-5 align-middle text-center">
                     <Link to={`/contact-statuses/edit-contact/${status}`}>
                       <button className="btn btn-primary mx-1">Edit</button>
