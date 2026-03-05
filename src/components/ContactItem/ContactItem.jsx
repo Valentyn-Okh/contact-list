@@ -2,39 +2,74 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { deleteContact } from "../../redux/actions";
 
-export default function ContactItem(){
-  const dispatch = useDispatch()
-  const contacts = useSelector(state => state.contacts)
-  const searchContacts = contacts
-  // const searchContacts = stor.search ? stor.contacts.filter(contact => 
-  //   `${contact.firstName.toLowerCase()} ${contact.lastName.toLowerCase()}`
-  //   .includes(stor.search.toLowerCase())) : stor.contacts 
+export default function ContactItem() {
+  const dispatch = useDispatch();
+  const contacts = useSelector((state) => state.contacts);
 
-  return(
-    <table className="table table-striped">
-      <thead>
+  const searchContacts = contacts;
+
+  if (!contacts.length) {
+    return <h3 className="text-center mt-3">No contacts found</h3>;
+  }
+
+  return (
+    <table className="table table-striped table-hover align-middle">
+      <thead className="table-dark">
         <tr>
-          <th scope="col"></th>
-          <th className="text-center" scope="col">Name</th>
-          <th className="text-center" scope="col">Email/Phone</th>
-          <th className="text-center" scope="col">Status</th>
-          <th className="text-center" scope="col">Edit/Del</th>
+          <th></th>
+          <th className="text-center">Name</th>
+          <th className="text-center">Email / Phone</th>
+          <th className="text-center">Status</th>
+          <th className="text-center">Actions</th>
         </tr>
       </thead>
+
       <tbody>
-        {searchContacts.map(contact => (
+        {searchContacts.map((contact) => (
           <tr key={contact.id}>
-            <td><img className="rounded-circle" src={`https://randomuser.me/api/portraits/${contact.gender}/${contact.avatar}.jpg`} alt="avatar" /></td>
-            <td className="fs-5 align-middle text-center">{contact.firstName}<br/>{contact.lastName}</td>
-            <td className="fs-5 align-middle text-center">{contact.email}<br/>{contact.phone}</td>
-            <td className="fs-6 align-middle text-center">{contact.status.toUpperCase()}</td>
-            <td className="fs-5 align-middle text-center">
-              <Link to={`/update-contact/${contact.id}`}><button>Edit</button></Link>
-              <button onClick={() => dispatch(deleteContact(contact.id))}>Delete</button>
+            <td className="text-center">
+              <img
+                className="rounded-circle"
+                width="50"
+                height="50"
+                src={`https://randomuser.me/api/portraits/${contact.gender}/${contact.avatar}.jpg`}
+                alt="avatar"
+              />
+            </td>
+
+            <td className="text-center">
+              <div className="fw-bold">{contact.firstName}</div>
+              <div>{contact.lastName}</div>
+            </td>
+
+            <td className="text-center">
+              <div>{contact.email}</div>
+              <div>{contact.phone}</div>
+            </td>
+
+            <td className="text-center">
+              <span className="badge bg-success">
+                {contact.status.toUpperCase()}
+              </span>
+            </td>
+
+            <td className="text-center">
+              <Link to={`/update-contact/${contact.id}`}>
+                <button className="btn btn-sm btn-primary me-2">
+                  Edit
+                </button>
+              </Link>
+
+              <button
+                className="btn btn-sm btn-danger"
+                onClick={() => dispatch(deleteContact(contact.id))}
+              >
+                Delete
+              </button>
             </td>
           </tr>
         ))}
       </tbody>
     </table>
-  )
+  );
 }
