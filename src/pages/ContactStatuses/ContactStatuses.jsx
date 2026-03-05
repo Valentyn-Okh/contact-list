@@ -27,7 +27,8 @@ export default function ContactStatuses() {
       <div className="row">
         <div className="col-12">
           <Link
-            to={"/contact-statuses/add-contact-status"}
+            to={"/contact-statues/add-contact-status"}
+            type ="button"
             className="btn btn-success m-2 btn-lg"
           >
             ADD STATUS
