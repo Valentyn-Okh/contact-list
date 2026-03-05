@@ -1,4 +1,4 @@
-import { ADD_CONTACT, EDIT_CONTACT, DELETE_CONTACT, ADD_STATUS, EDIT_STATUS } from "./type";
+import { ADD_CONTACT, EDIT_CONTACT, DELETE_CONTACT, ADD_STATUS, EDIT_STATUS, DELETE_STATUS } from "./type";
 
 const intialState = {
     contacts:[
@@ -175,6 +175,24 @@ const reducer = (state = intialState, action ) => {
         contactStatuses: updatedContactStatus,
         contacts: updatedContacts
       }
+    case DELETE_STATUS:
+      if (!state.contactStatuses[action.payload]) {
+        console.warn(`Status ${action.payload} does not exist.`);
+        return state;
+      }   
+
+      const remainingStatuses = { ...state.contactStatuses };
+      delete remainingStatuses[action.payload];
+
+      const updatedContactsOnDelete = state.contacts.map(contact =>
+        contact.status === action.payload ? { ...contact, status: "Others" } : contact
+      );
+
+      return {
+        ...state,
+        contactStatuses: remainingStatuses,
+        contacts: updatedContactsOnDelete,
+      };
     default:
       return state
   }
