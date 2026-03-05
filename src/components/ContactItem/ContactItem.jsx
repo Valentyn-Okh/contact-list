@@ -1,10 +1,12 @@
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { deleteContact } from "../../redux/actions";
 
 export default function ContactItem() {
   const dispatch = useDispatch();
   const contacts = useSelector((state) => state.contacts);
+
+  const navigate = useNavigate();
 
   const searchContacts = contacts;
 
@@ -26,7 +28,9 @@ export default function ContactItem() {
 
       <tbody>
         {searchContacts.map((contact) => (
-          <tr key={contact.id}>
+          <tr key={contact.id} style={{cursor: "pointer"}}
+            onClick={() => navigate(`/update-contact/${contact.id}`)}
+          >
             <td className="text-center">
               <img
                 className="rounded-circle"
@@ -62,7 +66,9 @@ export default function ContactItem() {
 
               <button
                 className="btn btn-sm btn-danger"
-                onClick={() => dispatch(deleteContact(contact.id))}
+                onClick={(e) => { 
+                  e.stopPropagation();
+                  dispatch(deleteContact(contact.id))}}
               >
                 Delete
               </button>
